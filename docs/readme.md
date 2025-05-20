@@ -91,3 +91,7 @@ class BaseProcessor(ABC):
 ### from
 功能：指定当前流程继承的流程，其值为一个或多个（数组）流程文件路径。
 详细说明见`yaml-flow.md`文件
+
+
+## 启动
+python main.py flow/qa_test.yaml 
