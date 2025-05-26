@@ -3,11 +3,34 @@ description: just for test
 
 nodes:
   csv_to_json: CSVToJSONConverter('test_data/data.csv', 'test_data/data.json')
-  rule1: Character
-  rule2: EndWithTerminal
-  chain1: Chain(csv_to_json, rule1)
+  rule0: RenameFields(tmp={'id':'data_id', 'data':'content'})
+  rule1: LLMBaseEval(api_key="sk-e8686abb857d4f91ac9e154a567e2baa", api_url="https://api.deepseek.com", model="deepseek-chat")
+  rule2: ScoreCollection
+  chain1: Chain(rule0, rule1, rule2)
   chain2: Chain(csv_to_json, rule2)
   score: Comprehensive()
 
 loader: CSV('test_data/data.csv')
-processor: Chain(Aggregate(chain1, chain2, max_workers=2), score, Print())
+processor: chain1
+
+# name: hello world
+# description: just for test
+
+# nodes:
+#   csv_to_json: CSVToJSONConverter('test_data/data.csv', 'test_data/data.json')
+#   rule1: Character
+#   rule2: EndWithTerminal
+#   chain1: Chain(csv_to_json, rule1)
+#   chain2: Chain(csv_to_json, rule2)
+#   score: Comprehensive()
+
+# loader: CSV('test_data/data.csv')
+# # processor: Chain(Aggregate(chain1, chain2, max_workers=2), score, Print())
+# from llm_base.interface.score_collection import ScoreCollection
+# from llm_base.interface.llm_base_eval import LLMBaseEval
+
+# BaseOpenAI.dynamic_config = DynamicLLMConfig(
+#         key="sk-e8686abb857d4f91ac9e154a567e2baa",
+#         api_url="https://api.deepseek.com",
+#         model="deepseek-chat",
+#     )
