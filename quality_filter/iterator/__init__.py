@@ -8,4 +8,6 @@ from .score import Comprehensive
 from .transform import CSVToJSONConverter
 from llm_base.interface.score_collection import ScoreCollection
 from llm_base.interface.llm_base_eval import LLMBaseEval
-from .transform import CSVToJSONConverter
+
+from .accuracy_rule import DetoxifyProcess
+from .accuracy_ml import ConsistencyProcess, CompletionProcess, AdaptabilityProcess
