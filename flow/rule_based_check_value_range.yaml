@@ -1,0 +1,14 @@
+name: rule_based_outlier_detection
+description: This file is used to detect outlier
+
+
+nodes:
+  rule1: CheckValueRange((0,1))
+  chain1: Chain(rule1)
+  select1 : SelectVal('invalid_ratio')
+  # "invalid_count" ,"valid_count", "total_count", "invalid_ratio"
+  score: Comprehensive()
+
+
+loader: Json('test_data/rule_based_test_data/accuracy_value_range.json')
+processor: Chain(Aggregate(Chain(chain1,select1), Chain(chain1,select1), max_workers=2), score, Print())

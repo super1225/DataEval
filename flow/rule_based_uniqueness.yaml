@@ -1,0 +1,16 @@
+name: rule_based_uniqueness
+description: This file is used to test the uniqueness of the data.
+
+
+nodes:
+  rule1: UniquenessManager('uniqueness')  #''uniqueness','duplicate'
+  chain1: Chain(rule1)
+  select1 : SelectVal('unique_ratio')
+  # uniqueness:"unique_count","total","unique_ratio";
+  # duplicate:"duplicate_count","total","duplicate_ratio"
+  score: Comprehensive()
+
+
+loader: Json('test_data/rule_based_test_data/uniqueness_uniqueness.json')
+#loader: Json('test_data/rule_based_test_data/uniqueness_repetition.json')
+processor: Chain(Aggregate(Chain(chain1,select1), Chain(chain1,select1), max_workers=2), score, Print())

@@ -1,0 +1,12 @@
+name: rule_based_completeness_field_completeness
+description: This file is used to test field completeness under the completeness metrics.
+
+nodes:
+  rule1:  RuleFieldCompletenessManager('EndWithTerminal') # 'EndWithTerminal','EndWithEllipsis','SentenceNumber','WordNumber'
+  rule2:  RuleFieldCompletenessManager('EndWithEllipsis') # 'EndWithTerminal','EndWithEllipsis','SentenceNumber','WordNumber'
+  chain1: Chain(rule1)
+  chain2: Chain(rule2)
+  score: Comprehensive()
+
+loader: Json('test_data/rule_based_test_data/completeness_ellipsis_ratio.json')
+processor: Chain(Aggregate(Chain(chain1,Print()), chain2, max_workers=2), score, Print())

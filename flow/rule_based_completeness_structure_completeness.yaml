@@ -1,0 +1,13 @@
+name: rule_completeness_structure_completeness
+description: This file is used to test structure completeness
+
+
+nodes:
+  rule1: CheckStructureCompleteness()
+  chain1: Chain(rule1)
+  score: Comprehensive()
+
+
+loader: Json('test_data/rule_based_test_data/completeness_structure_completeness.json')
+#loader: Json('test_data/rule_based_test_data/uniqueness_repetition.json')
+processor: Chain(Aggregate(chain1, chain1, max_workers=2), score, Print())

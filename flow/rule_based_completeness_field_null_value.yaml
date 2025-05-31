@@ -1,0 +1,12 @@
+name: rule_based_completeness_field_null_value
+description: This file is used to test field null value under the completeness metrics.
+
+nodes:
+  rule1: CheckNullValues
+  chain1: Chain(rule1)
+  select1 : SelectVal('null_ratio')
+  score: Comprehensive()
+
+
+loader: Json('test_data/rule_based_test_data/completeness_field_null_value.json')
+processor: Chain(Aggregate(Chain(chain1,select1), Chain(chain1,select1), max_workers=2), score, Print())
