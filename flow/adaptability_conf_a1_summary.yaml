@@ -1,0 +1,9 @@
+name: adaptability_conf_a1_summary
+description: example for evaluating the adaptability
+
+nodes:
+  rule1: AdaptabilityProcess("/path/to/Qwen2.5-0.5B-Instruct", "SUMMARIZATION", 0.1, "lora", 1, 1337)
+  chain1: Chain((rule1))
+
+loader: Json('test_data/perturbed_data.json')
+processor: Chain(Aggregate(chain1, max_workers=1), Print())

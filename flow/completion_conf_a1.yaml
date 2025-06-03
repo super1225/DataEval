@@ -1,0 +1,9 @@
+name: completion_conf_a1
+description: example for evaluating the completion
+
+nodes:
+  rule1: CompletionProcess("test_data/refs_for_completion.jsonl", "/path/to/roberta-large", 12, "BERT_SCORE")
+  chain1: Chain((rule1))
+
+loader: JsonLine('test_data/input_for_completion.jsonl')
+processor: Chain(Aggregate(chain1, max_workers=1), Print())

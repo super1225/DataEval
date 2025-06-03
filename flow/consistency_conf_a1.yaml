@@ -1,0 +1,9 @@
+name: consistency_conf_a1
+description: example for evaluating the consistency
+
+nodes:
+  rule1: ConsistencyProcess("/path/to/Qwen2.5-0.5B-Instruct", "Perplexity")
+  chain1: Chain((rule1))
+
+loader: JsonLine('test_data/text_for_consistency.jsonl')
+processor: Chain(Aggregate(chain1, max_workers=1), Print())

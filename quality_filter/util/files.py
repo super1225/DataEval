@@ -1,6 +1,8 @@
 import os
 import json as JSON
 
+from typing import List, Dict
+
 
 def text(filename: str, encoding="utf8", **kwargs):
     """读取文本文件"""
@@ -52,3 +54,15 @@ def display_file_content(filename: str, encoding="utf8", limit=1000):
 def exists(filename: str) -> bool:
     """判断文件是否存在"""
     return os.path.exists(filename)
+
+
+def input_data_to_str(input_data: str | List[str] | Dict[str | int, str], sep: str = "\n") -> str:
+    """将输入数据转换为字符串"""
+    if isinstance(input_data, str):
+        return input_data
+    elif isinstance(input_data, list):
+        return sep.join(input_data)
+    elif isinstance(input_data, dict):
+        return sep.join(list(input_data.values()))
+    else:
+        raise ValueError("input_data must be: str | List[str] | Dict[str | int, str]")

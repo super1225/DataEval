@@ -1,0 +1,15 @@
+name: rule_based_outlier_detection
+description: This file is used to detect outlier
+
+
+nodes:
+  rule1: CheckOutlier
+  chain1: Chain(rule1)
+  select1 : SelectVal('outlier_ratio')
+  # "outlier_count","total","outlier_ratio"
+  score: Comprehensive()
+
+
+loader: Json('test_data/rule_based_test_data/accuracy_outlier_detection.json')
+#loader: Json('test_data/rule_based_test_data/uniqueness_repetition.json')
+processor: Chain(Aggregate(Chain(chain1,select1), Chain(chain1,select1), max_workers=2), score, Print())

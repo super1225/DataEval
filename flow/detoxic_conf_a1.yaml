@@ -1,0 +1,9 @@
+name: consistency_conf_a1
+description: example for evaluating the toxicity
+
+nodes:
+  rule1: DetoxifyProcess(["badword1", "badword2"], "RULE_BASED")
+  chain1: Chain((rule1))
+
+loader: JsonLine('test_data/toxic.jsonl')
+processor: Chain(Aggregate(chain1, max_workers=1), Print())
