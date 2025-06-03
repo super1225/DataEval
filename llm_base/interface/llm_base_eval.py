@@ -8,7 +8,7 @@ from llm_base.base.base_res import ResponseScoreReason
 from quality_filter.iterator.base import JsonIterator
 
 class LLMBaseEval(JsonIterator):
-    def __init__(self, user_prompt: str = None, system_prompt: str = None, output_format: str = None, api_key: str = None, api_url: str = None, model: str = None, parameters: dict = None, local_prompt: BasePrompt = BasePrompt):
+    def __init__(self, user_prompt: str = None, system_prompt: str = None, output_format: str = None, api_key: str = None, api_url: str = None, model: str = None, parameters: dict = None, local_prompt: BasePrompt = None):
         '''
         初始化llmbase评估器
         '''
@@ -18,10 +18,13 @@ class LLMBaseEval(JsonIterator):
         if local_prompt is not None:
             self.prompt = local_prompt
         else:
-            self.prompt = BasePrompt
-            self.prompt.content = user_prompt
-            self.prompt.system_prompt = system_prompt
-            self.prompt.output_format = output_format
+            self.prompt = BasePrompt()
+            if user_prompt is None:
+                self.prompt.content = user_prompt
+            if system_prompt is None:
+                self.prompt.system_prompt = system_prompt
+            if output_format is None:
+                self.prompt.output_format = output_format
         
         BaseOpenAI.dynamic_config = DynamicLLMConfig(
             key="sk-e8686abb857d4f91ac9e154a567e2baa",

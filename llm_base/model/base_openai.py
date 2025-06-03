@@ -36,11 +36,11 @@ class BaseOpenAI(BaseLLM):
 
     @classmethod
     def build_messages(cls, input_data: MetaData) -> List:
-        prompt = input_data.prompt if input_data.prompt is not None else cls.prompt.content
+        # prompt = input_data.prompt if input_data.prompt is not None else cls.prompt.content
         messages = [
             {"role": "system", "content": cls.prompt.system_prompt},
             {"role": "user",
-             "content": prompt + input_data.content + cls.prompt.output_format}
+             "content": cls.prompt.content + input_data.content + cls.prompt.output_format}
         ]
         return messages
 
